@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Server Example</title>
+</head>
+<body>
+
+<form id="exampleForm">
+    <label for="inputData">Enter Data:</label>
+    <input type="text" id="inputData" name="inputData" required>
+    <button type="submit">Submit</button>
+</form>
+
+<div id="response-container">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('exampleForm').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        var inputData = document.getElementById('inputData').value;
+
+        fetch('http://localhost:8080/json?data=' + encodeURIComponent(inputData))
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response-container').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+});
+</script>
+
+</body>
+</html>
